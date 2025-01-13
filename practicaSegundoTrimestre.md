@@ -58,7 +58,7 @@ Cada comentario está asociado tanto a un usuario como a un evento.
 1. Diseñar los modelos a partir de los requisitos del sistema.
 2. Implementar las relaciones entre los modelos usando `ForeignKey` y `ManyToManyField` donde sea necesario.
 3. Crear un esquema visual de la base de datos utilizando herramientas como **dbdiagram.io** o cualquier otra.
-4. Configurar el panel de administración de Django para gestionar los modelos.
+4. Configurar el panel de administración de Django para gestionar los modelos. Añade al menos 5 datos de eventos, reservas, usuarios personalizados y comentarios. Personaliza la tabla eventos en el administrador.
 
 #### **Etapa 2: Implementación de Endpoints Avanzados**
 
