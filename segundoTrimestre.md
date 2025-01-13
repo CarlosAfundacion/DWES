@@ -470,20 +470,6 @@ def realizar_compra(request):
 
 ---
 
-## **Actividad práctica**
-
-1. **Definir los modelos:**
-   - Crea los modelos `Categoria` y `Producto` con relaciones y campos adecuados.
-
-2. **Protección de vistas:**
-   - Implementa una vista protegida con `@login_required` para listar los productos.
-
-3. **Gestión de métodos HTTP:**
-   - Crea una vista con `@require_http_methods` para manejar la creación de productos vía `POST` y su listado vía `GET`.
-
-4. **Prueba de funcionalidad:**
-   - Realiza migraciones y verifica las vistas en el navegador.
-
 # 2: Funciones del ORM de Django y endpoints avanzados
 
 ## Objetivo
@@ -1083,12 +1069,6 @@ class ProductoAPI(APIView):
 
 ---
 
-## Actividad práctica
-1. **Configurar autenticación por tokens en tu proyecto Django.**
-2. **Crear un conjunto de peticiones en Postman para probar los endpoints de tu API.**
-3. **Implementar documentación con Swagger y verificar su accesibilidad en `/swagger/`.**
-4. **Probar el acceso a endpoints protegidos y validar respuestas esperadas.**
-
 # 4: Uso de plantillas en Django y manejo dinámico de contenido
 
 ## Objetivo
@@ -1293,19 +1273,6 @@ Resultado: La página generada combinará la estructura de `base.html` con el co
    ```
 
 ---
-
-## Actividad práctica
-1. **Crear vistas dinámicas**:
-   - Define una vista que envíe una lista de productos al contexto.
-   - Muestra los productos en un `<ul>` en la plantilla correspondiente.
-
-2. **Implementar herencia de plantillas**:
-   - Crea una plantilla base con encabezado, contenido y pie de página.
-   - Crea al menos dos plantillas hijas (por ejemplo, inicio y contacto) que extiendan la base.
-
-3. **Utilizar etiquetas y filtros**:
-   - Aplica condiciones `if` para mostrar mensajes según el estado del usuario.
-   - Usa filtros para formatear fechas y truncar textos largos.
 
 
 
