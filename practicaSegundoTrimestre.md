@@ -63,7 +63,7 @@ Cada comentario está asociado tanto a un usuario como a un evento.
 #### **Etapa 2: Implementación de Endpoints Avanzados**
 
 1. **CRUD de eventos:**
-   - GET: Listar todos los eventos disponibles (filtros opcionales por título o fecha).
+   - GET: Listar todos los eventos disponibles (filtros opcionales por título o fecha, ordenados y paginados con un límite de 10 elementos por página).
    - POST: Crear un evento (solo organizadores).
    - PUT/PATCH: Actualizar un evento (solo organizadores).
    - DELETE: Eliminar un evento (solo organizadores).
