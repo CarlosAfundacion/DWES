@@ -108,16 +108,17 @@ Cada comentario está asociado tanto a un usuario como a un evento.
 2. **Etapa 2:**
 
    - Código del proyecto en gitHub haciendo commits cuando toque y en Classroom.
-   - Capturas de las pruebas en postman en classroom
+   - Vídeo de las pruebas en postman en classroom (sin audio)
 
 3. **Etapa 3:**
 
    - Código del proyecto en gitHub haciendo commits cuando toque y en Classroom.
+   -  Vídeo de las pruebas en postman en classroom (sin audio)
 
 4. **Etapa 4:**
 
    - Código del proyecto en gitHub haciendo commits cuando toque y en Classroom.
-   - Capturas de las plantillas funcionando con datos dinámicos en Classroom
+   - vídeo de las plantillas funcionando con datos dinámicos en Classroom
 
 ---
 
