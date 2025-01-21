@@ -772,18 +772,83 @@ def listar_productos_limitados(request):
     return JsonResponse(data, safe=False)
 ```
 
-- **Combinar filtros, orden y límite:**
+- **Combinar filtros, orden y límite con paginación:**
 
 ```python
-def buscar_y_ordenar_productos(request):
-    nombre = request.GET.get("nombre", "")
-    orden = request.GET.get("orden", "nombre")
-    limite = int(request.GET.get("limite", 10))
-    productos = Producto.objects.filter(nombre__icontains=nombre).order_by(orden)[:limite]
-    data = [{"id": p.id, "nombre": p.nombre, "precio": p.precio} for p in productos]
+from django.core.paginator import Paginator
+from django.http import JsonResponse
+from .models import Producto
+
+def buscar_y_ordenar_productos_paginados(request):
+    nombre = request.GET.get("nombre", "")  # Filtrar por nombre
+    orden = request.GET.get("orden", "nombre")  # Ordenar por el campo especificado
+    limite = int(request.GET.get("limite", 10))  # Resultados por página
+    pagina = int(request.GET.get("pagina", 1))  # Página actual
+
+    # Filtrar y ordenar productos
+    productos = Producto.objects.filter(nombre__icontains=nombre).order_by(orden)
+
+    # Paginación
+    paginator = Paginator(productos, limite)  # Dividir productos en páginas de tamaño `limite`
+
+    try:
+        productos_pagina = paginator.page(pagina)  # Obtener los productos de la página actual
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=400)  # Manejar errores de paginación
+
+    # Crear respuesta con datos paginados
+    data = {
+        "count": paginator.count,  # Número total de productos
+        "total_pages": paginator.num_pages,  # Número total de páginas
+        "current_page": pagina,  # Página actual
+        "next": pagina + 1 if productos_pagina.has_next() else None,  # Página siguiente
+        "previous": pagina - 1 if productos_pagina.has_previous() else None,  # Página anterior
+        "results": [
+            {"id": p.id, "nombre": p.nombre, "precio": p.precio} for p in productos_pagina
+        ]  # Resultados actuales
+    }
+
     return JsonResponse(data, safe=False)
+
+```
+### Parámetros esperados en la solicitud
+1. **`nombre`**: Filtra productos cuyo nombre contenga el texto especificado.
+2. **`orden`**: Ordena los resultados por un campo del modelo (por defecto, `nombre`).
+3. **`limite`**: Especifica el número de resultados por página (por defecto, 10).
+4. **`pagina`**: Especifica el número de la página que se desea consultar (por defecto, 1).
+
+### Ejemplo de solicitud:
+Supongamos que tienes el siguiente modelo de productos:
+
+```python
+class Producto(models.Model):
+    nombre = models.CharField(max_length=100)
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
 ```
 
+Haz una llamada como esta para obtener resultados paginados:
+
+```http
+GET /api/productos/?nombre=camisa&orden=precio&limite=5&pagina=2
+```
+
+### Ejemplo de respuesta:
+```json
+{
+    "count": 23,
+    "total_pages": 5,
+    "current_page": 2,
+    "next": 3,
+    "previous": 1,
+    "results": [
+        {"id": 6, "nombre": "Camisa Roja", "precio": 15.99},
+        {"id": 7, "nombre": "Camisa Azul", "precio": 18.99},
+        {"id": 8, "nombre": "Camisa Verde", "precio": 19.99},
+        {"id": 9, "nombre": "Camisa Negra", "precio": 20.99},
+        {"id": 10, "nombre": "Camisa Blanca", "precio": 21.99}
+    ]
+}
+```
 ---
 
 ### Parte 3: Guía para configurar y usar Postman
@@ -1273,6 +1338,15 @@ Resultado: La página generada combinará la estructura de `base.html` con el co
    ```
 
 ---
+
+
+
+
+
+
+
+
+
 
 
 
