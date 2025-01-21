@@ -75,7 +75,11 @@ Cada comentario está asociado tanto a un usuario como a un evento.
 3. **Comentarios:**
    - GET: Listar comentarios de un evento.
    - POST: Crear un comentario asociado a un evento (solo usuarios autenticados).
-4. **Optimización de consultas:**
+  
+4. **Usuario**
+   - POST: Login
+   - POST: Register
+6. **Optimización de consultas:**
    - Usar `select_related` y `prefetch_related` para mejorar el rendimiento de las vistas.
 
 #### **Etapa 3: Autenticación, Seguridad y Documentación**
@@ -98,6 +102,8 @@ Cada comentario está asociado tanto a un usuario como a un evento.
 ---
 
 ### Entregables
+
+**Cada etapa se creará una rama distinta llamada SemanaX (donde X es el número de la etapa en la que estamos). Los commits se harán con el formato: SemanaX: Commit que se ajuste al formato descrito en la primera evaluación**
 
 1. **Etapa 1:**
 
