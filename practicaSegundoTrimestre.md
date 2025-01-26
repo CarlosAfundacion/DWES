@@ -67,7 +67,7 @@ Cada comentario está asociado tanto a un usuario como a un evento.
    - POST: Crear un evento (solo organizadores).
    - PUT/PATCH: Actualizar un evento (solo organizadores).
    - DELETE: Eliminar un evento (solo organizadores).
-2. **Gestín de reservas:**
+2. **Gestión de reservas:**
    - GET: Listar reservas de un usuario autenticado.
    - POST: Crear una nueva reserva.
    - PUT/PATCH: Actualizar el estado de una reserva (solo organizadores).
@@ -84,11 +84,11 @@ Cada comentario está asociado tanto a un usuario como a un evento.
 
 #### **Etapa 3: Autenticación, Seguridad y Documentación**
 
-1. Implementar autenticación por tokens con **TokenAuthentication**.
+1. Implementar autenticación por tokens con **TokenAuthentication**. Para hacerlo correctamente debes migrar las vistas actuales (endpoints) al formato de clases `APIView`.
 2. Configurar permisos según roles de usuario:
    - Los organizadores pueden gestionar eventos y reservas.
    - Los participantes pueden listar eventos y crear/cancelar sus propias reservas.
-3. Documentar la API usando **Swagger** (drf-yasg).
+3. Documentar la API usando **Swagger** (drf-yasg). En el caso de que no se generen todos los parámetros, investiga cómo hacerlo con `swagger_auto_schema`.
 
 #### **Etapa 4: Plantillas y Vistas Dinámicas**
 
