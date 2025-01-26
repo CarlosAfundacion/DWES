@@ -999,6 +999,133 @@ class VistaProtegida(APIView):
 
 ---
 
+
+**Transición de Vistas Normales a APIView en Django REST Framework**
+
+**Introducción a APIView**
+Django REST Framework (DRF) introduce `APIView`, una clase base que permite manejar peticiones HTTP de manera estructurada para construir endpoints RESTful. A diferencia de las vistas normales, `APIView` proporciona soporte integrado para manejo de peticiones, serialización y control de excepciones, entre otras funcionalidades.
+
+**Configurar APIView en DRF**
+1. **Requisitos previos:**
+   - Asegúrate de tener instalado DRF:
+     ```
+     pip install djangorestframework
+     ```
+   - Incluye `rest_framework` en `INSTALLED_APPS` de `settings.py`.
+
+2. **Migrar una vista normal a APIView:**
+   A continuación, transformamos una vista normal que devuelve un JSON en una basada en APIView.
+
+   **Vista Normal:**
+   ```python
+   from django.http import JsonResponse
+
+   def ejemplo_vista(request):
+       if request.method == 'GET':
+           return JsonResponse({"mensaje": "Hola desde una vista normal"})
+   ```
+
+   **Con APIView:**
+   ```python
+   from rest_framework.views import APIView
+   from rest_framework.response import Response
+
+   class EjemploAPIView(APIView):
+       def get(self, request):
+           return Response({"mensaje": "Hola desde una APIView"})
+   ```
+
+**Tipos de Peticiones y Manejo de Datos**
+
+1. **GET: Consultar Información**
+   ```python
+   class ObtenerDatosAPIView(APIView):
+       def get(self, request):
+           datos = ["Python", "Django", "DRF"]
+           return Response({"datos": datos})
+   ```
+
+2. **POST: Crear Recursos**
+   ```python
+   from rest_framework import status
+
+   class CrearRecursoAPIView(APIView):
+       def post(self, request):
+           datos = request.data  # Extraer datos del cuerpo de la petición
+           return Response({"mensaje": "Recurso creado", "datos": datos}, status=status.HTTP_201_CREATED)
+   ```
+
+3. **PUT: Actualizar Recursos**
+   ```python
+   class ActualizarRecursoAPIView(APIView):
+       def put(self, request, recurso_id):
+           datos = request.data
+           return Response({"mensaje": f"Recurso {recurso_id} actualizado", "datos": datos})
+   ```
+
+4. **DELETE: Eliminar Recursos**
+   ```python
+   class EliminarRecursoAPIView(APIView):
+       def delete(self, request, recurso_id):
+           return Response({"mensaje": f"Recurso {recurso_id} eliminado"}, status=204)
+   ```
+
+**Parámetros en Endpoints**
+
+1. **Query Params:**
+   Utilizados para filtrar datos.
+   ```python
+   class FiltrarDatosAPIView(APIView):
+       def get(self, request):
+           filtro = request.query_params.get('tipo', 'general')
+           return Response({"mensaje": f"Filtrado por: {filtro}"})
+   ```
+
+2. **Path Params:**
+   Utilizados para identificar recursos específicos en la URL.
+   ```python
+   class RecursoDetalleAPIView(APIView):
+       def get(self, request, recurso_id):
+           return Response({"mensaje": f"Detalles del recurso {recurso_id}"})
+   ```
+
+3. **Body:**
+   Los datos del cuerpo de la petición se extraen con `request.data`.
+   ```python
+   class CrearUsuarioAPIView(APIView):
+       def post(self, request):
+           nombre = request.data.get('nombre')
+           return Response({"mensaje": f"Usuario {nombre} creado"})
+   ```
+
+**Configuración de URLs para APIView**
+Para utilizar `APIView` en las rutas, debes configurar el archivo `urls.py`. A continuación se muestra un ejemplo de cómo hacerlo para los diferentes tipos de vistas mencionadas:
+
+```python
+from django.urls import path
+from .views import (
+    EjemploAPIView, ObtenerDatosAPIView, CrearRecursoAPIView,
+    ActualizarRecursoAPIView, EliminarRecursoAPIView,
+    FiltrarDatosAPIView, RecursoDetalleAPIView, CrearUsuarioAPIView
+)
+
+urlpatterns = [
+    path('ejemplo/', EjemploAPIView.as_view(), name='ejemplo'),
+    path('datos/', ObtenerDatosAPIView.as_view(), name='obtener_datos'),
+    path('crear/', CrearRecursoAPIView.as_view(), name='crear_recurso'),
+    path('actualizar/<int:recurso_id>/', ActualizarRecursoAPIView.as_view(), name='actualizar_recurso'),
+    path('eliminar/<int:recurso_id>/', EliminarRecursoAPIView.as_view(), name='eliminar_recurso'),
+    path('filtrar/', FiltrarDatosAPIView.as_view(), name='filtrar_datos'),
+    path('detalle/<int:recurso_id>/', RecursoDetalleAPIView.as_view(), name='detalle_recurso'),
+    path('usuario/crear/', CrearUsuarioAPIView.as_view(), name='crear_usuario'),
+]
+```
+Cada ruta apunta al método `as_view()` de la clase `APIView`. Esto permite que la vista maneje las peticiones HTTP según lo configurado en sus métodos.
+
+
+
+
+
 ### Seguridad en la API
 
 #### Protección contra ataques comunes
@@ -1088,7 +1215,17 @@ Swagger (ahora OpenAPI) es un estándar para documentar y probar APIs. Django RE
    ```bash
    pip install drf-yasg
    ```
+2. **Añadir a `INSTALLED_APPS` en `settings.py`**
+    ```python
+    INSTALLED_APPS = [
+    ...
+    'rest_framework',
+    'rest_framework.authtoken',
+    'drf_yasg',
+    ]
+    ```
 
+   
 2. **Configurar en `urls.py`**:
    ```python
    from drf_yasg.views import get_schema_view
