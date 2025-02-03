@@ -103,7 +103,7 @@ Cada comentario está asociado tanto a un usuario como a un evento.
 
 ### Entregables
 
-**Cada etapa se creará una rama distinta llamada SemanaX (donde X es el número de la etapa en la que estamos). Los commits se harán con el formato: SemanaX: Commit que se ajuste al formato descrito en la primera evaluación**
+**Cada etapa se creará una rama distinta llamada SemanaX (donde X es el número de la etapa en la que estamos). Los commits se harán con el formato: SemanaX: Commit que se ajuste al formato descrito en la primera evaluación. Una vez terminado el trabajo de la rama se mergeará en main para  cada entrega**
 
 1. **Etapa 1:**
 
