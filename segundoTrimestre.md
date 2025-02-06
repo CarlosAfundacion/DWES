@@ -1369,8 +1369,18 @@ En Django, las vistas envían datos a las plantillas mediante un contexto.
        }
        return render(request, 'inicio.html', contexto)
    ```
+2. **Definición en `urls.py`**
+```python
+from django.urls import path
+from .views import inicio
 
-2. **Plantilla en `templates/inicio.html`**:
+urlpatterns = [
+    path('', inicio, name='inicio'),
+]
+```
+De esta forma, cuando accedas a la URL raíz (`/`), Django cargará la plantilla `inicio.html`.
+
+3. **Plantilla en `templates/inicio.html`**:
    ```html
    <!DOCTYPE html>
    <html>
@@ -1437,7 +1447,48 @@ Resultado: La página generada combinará la estructura de `base.html` con el co
 
 ---
 
-## Parte 5: Uso de etiquetas y filtros
+## Parte 5: Recogida y uso de token en las plantillas
+
+
+Para obtener y almacenar el token de autenticación después de iniciar sesión, puedes usar JavaScript dentro de de tu página de login:
+
+```html
+<script>
+    document.getElementById('login-form').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        const response = await fetch('http://127.0.0.1:8000/tuLogin', {
+            method: 'POST',
+            body: JSON.stringify({
+                username: formData.get('username'),
+                password: formData.get('password')
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        localStorage.setItem('token', data.token);
+    });
+</script>
+```
+
+Para usar el token en una solicitud protegida:
+
+```javascript
+fetch('http://127.0.0.1:8000/tu_endpoint', {
+    method: 'GET',// o el método correspondiente
+    headers: {
+        'Authorization': 'Token ' + localStorage.getItem('token')
+    }
+})
+.then(response => response.json())
+.then(data => console.log(data));
+```
+
+---
+
+## Parte 4: Uso de etiquetas y filtros
 
 ### Etiquetas comunes
 1. **For loops**:
