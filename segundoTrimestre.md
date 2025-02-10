@@ -1268,7 +1268,36 @@ class ProductoAPI(APIView):
     def get(self, request):
         return Response([])
 ```
-
+#### Añadir parámetros
+```python
+@swagger_auto_schema(
+ operation_description="Lista eventos filtrados por título o fecha.",
+        manual_parameters=[
+            openapi.Parameter('titulo', openapi.IN_QUERY, description="Filtrar por título", type=openapi.TYPE_STRING),
+            openapi.Parameter('fecha', openapi.IN_QUERY, description="Filtrar por fecha (YYYY-MM-DD)", type=openapi.TYPE_STRING),
+            openapi.Parameter('pagina', openapi.IN_QUERY, description="Número de página", type=openapi.TYPE_INTEGER),
+        ],
+        responses={200: openapi.Response(description="Lista de eventos")}
+)
+```
+#### Añadir cuerpo a la petición
+```python
+@swagger_auto_schema(
+        operation_description="Crea un nuevo evento.",
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'titulo': openapi.Schema(type=openapi.TYPE_STRING, description='Título del evento'),
+                'descripcion': openapi.Schema(type=openapi.TYPE_STRING, description='Descripción del evento'),
+                'fecha_hora': openapi.Schema(type=openapi.TYPE_STRING, format="date-time",
+                                             description='Fecha y hora del evento'),
+                'capacidad': openapi.Schema(type=openapi.TYPE_INTEGER, description='Capacidad máxima de asistentes'),
+            },
+            required=['titulo', 'descripcion', 'fecha_hora', 'capacidad']
+        ),
+        responses={201: openapi.Response(description="Evento creado"),403: openapi.Response(description="No tienes permisos para crear eventos.")}
+    )
+```
 ---
 
 # 4: Uso de plantillas en Django y manejo dinámico de contenido
