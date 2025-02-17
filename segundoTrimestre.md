@@ -1333,10 +1333,9 @@ Ejemplo de estructura de carpetas:
 proyecto/
 ├── app/
 │   ├── templates/
-│   │   ├── app/
-│   │   │   ├── inicio.html
-│   │   │   ├── contacto.html
-│   │   │   ├── base.html
+│   │   ├── inicio.html
+│   │   ├── contacto.html
+│   │   ├── base.html
 ```
 3. Crea archivos HTML con el contenido estático y dinámico necesario.
 
