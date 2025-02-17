@@ -1513,6 +1513,8 @@ fetch('http://127.0.0.1:8000/tu_endpoint', {
 })
 .then(response => response.json())
 .then(data => console.log(data));
+
+window.location.href = "{% url 'tuPlantilla' %}"; //redireccionamos a otra plantilla se podría hacer con 'http://127.0.0.1:8000/plantilla'
 ```
 
 ---
