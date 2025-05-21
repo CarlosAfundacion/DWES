@@ -981,8 +981,26 @@ Usar tokens permite a los clientes autenticar peticiones enviando un identificad
        path('api-token-auth/', ObtainAuthToken.as_view(), name='api_token_auth'),
    ]
    ```
-   Los usuarios podrán autenticarse enviando sus credenciales (usuario y contraseña) y recibir un token como respuesta.
-
+   Los usuarios podrán autenticarse enviando sus credenciales (usuario y contraseña) y recibir un token como    respuesta. Pero para ello no podemos almacenar la contraseña como texto plano. A la hora de crear el usuario debemos usar una de estas dos opciones para que la contraseña esté hasheada:
+   
+    Usar `set_password`:
+    ```python
+    from django.contrib.auth.models import User
+    
+    user = User(username="manuel", email="manuel@example.com")
+    user.set_password("contraseña_segura")
+    user.save()
+    ```
+    Usar `create_user()`:
+    ```python
+    from django.contrib.auth.models import User
+    
+    user = User.objects.create_user(
+        username="manuel",
+        email="manuel@example.com",
+        password="contraseña_segura"
+    )
+    ```
 #### Proteger vistas con autenticación
 Para proteger las vistas, usa la clase `IsAuthenticated`, proveniente de Django REST Framework. Esta clase es utilizada para garantizar que solo los usuarios autenticados puedan acceder a las vistas protegidas. Es particularmente útil en APIs REST, donde las operaciones deben restringirse a clientes que han iniciado sesión correctamente. Además, `IsAuthenticated` se combina frecuentemente con otros permisos como `AllowAny` (que permite acceso sin restricciones) o `IsAdminUser` (que restringe el acceso a administradores), proporcionando flexibilidad en la gestión de accesos.
 ```python
